@@ -1,26 +1,188 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Paleta tomada del brand book (Més.pdf) */
+  --color-ink: #0b0c0e;
+  --color-ink-soft: #565e68;
+  --color-ink-faint: #8b939c;
+  --color-azul: #0d99ff;
+  --color-azul-deep: #0061ad;
+  --color-azul-wash: #e9f4ff;
+  --color-naranja: #fa8c00;
+  --color-amarillo: #ffc800;
+  --color-niebla: #f4f7f9;
+  --color-linea: #e2e8ee;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-syne), var(--font-inter), sans-serif;
+
+  /* Escala tipográfica: salto grande entre display y cuerpo, sin pasos intermedios tibios */
+  --text-display: clamp(2.25rem, 4.2vw, 3.75rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.04em;
+  --text-title: clamp(2rem, 4.2vw, 3.5rem);
+  --text-title--line-height: 1.02;
+  --text-title--letter-spacing: -0.02em;
+  --text-lead: clamp(1.0625rem, 1.5vw, 1.375rem);
+  --text-lead--line-height: 1.5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: #ffffff;
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-azul);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-azul);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Rol "utility": la misma familia en su grado óptico pequeño, más abierto.
+   Un solo tipo — el sistema del brand no usa una segunda familia para esto. */
+@utility eyebrow {
+  font-variation-settings: "opsz" 14;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+@utility num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Eje vertical azul: el divisor que el brand book usa para separar dos lados.
+   Acá es la columna vertebral que atraviesa las secciones. */
+@utility spine {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-azul) 12%,
+    var(--color-azul) 88%,
+    transparent
+  );
+}
+
+/* Hero sobre blanco: el color no llega como bloque sino como dos luces bajas
+   en las esquinas que no leen texto —celeste arriba a la derecha, detrás del
+   isotipo; amarillo abajo a la izquierda, bajo el CTA—. Sobre blanco los
+   cálidos translúcidos se aclaran en vez de virar a gris, así que acá el
+   naranja y el amarillo sí pueden trabajar como atmósfera. */
+.hero-claro {
+  background:
+    radial-gradient(
+      72% 62% at 90% -4%,
+      var(--color-azul-wash) 0%,
+      rgba(233, 244, 255, 0) 68%
+    ),
+    radial-gradient(
+      38% 34% at -4% 100%,
+      rgba(255, 200, 0, 0.1) 0%,
+      rgba(255, 200, 0, 0) 74%
+    ),
+    #ffffff;
+}
+
+/* Entrada del hero: está sobre el pliegue, así que se orquesta al cargar en
+   lugar de esperar al scroll como el resto de las secciones. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility entra {
+  animation: hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Panel del menú móvil: despliegue corto y seco. No reusa `entra` porque
+   0.9s en un menú se siente lento — acá el gesto tiene que responder. */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility menu-abre {
+  animation: menu-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes disc-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility disc {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: disc-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
