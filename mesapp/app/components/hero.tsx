@@ -32,19 +32,18 @@ export function Hero() {
         </p>
 
         <h1
-          className="entra mt-6 max-w-[17ch] font-display text-[clamp(2.75rem,6.4vw,5.5rem)] leading-[0.92] font-bold tracking-[-0.035em] text-ink text-balance"
+          className="entra mt-6 max-w-[17ch] font-display text-[clamp(2.625rem,6.4vw,5.375rem)] leading-[0.92] font-bold tracking-[-0.035em] text-ink text-balance"
           style={{ animationDelay: "80ms" }}
         >
           Financiamos lo que tu empresa produce.
         </h1>
 
         <p
-          className="entra mt-7 max-w-[52ch] text-lead text-ink-soft"
+          className="entra mt-7 max-w-[52ch] text-[clamp(0.8125rem,1.5vw,1.125rem)] leading-[1.5] text-ink-soft"
           style={{ animationDelay: "160ms" }}
         >
-          Analizamos tu operación y la presentamos a la entidad con más chances
-          de aprobarla. Leasing, préstamos prendarios y seguros de caución para
-          empresas de sectores productivos.
+          Leasing, préstamos prendarios y seguros de caución para empresas de
+          sectores productivos.
         </p>
 
         {/* Los dos comparten alto (56px) y eje: leen como un par de piezas con
