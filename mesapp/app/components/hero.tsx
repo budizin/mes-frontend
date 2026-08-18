@@ -218,7 +218,7 @@ export function Hero() {
     <section
       id="top"
       ref={sectionRef}
-      className="hero-claro relative isolate overflow-x-hidden"
+      className="hero-claro relative isolate overflow-x-clip"
     >
       {/* Racimo de badges: la misma paleta que separa los tres productos.
           Vive acá —antes que Entidades en el documento— para que esa
