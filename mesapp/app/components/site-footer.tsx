@@ -75,15 +75,33 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/12 pt-8 text-[0.8125rem] text-white/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {site.name}. Todos los derechos
-            reservados.
-          </p>
-          <p>
-            Més Capital intermedia operaciones. El otorgamiento del crédito
-            queda sujeto a la evaluación de cada entidad financiera.
-          </p>
+        <div className="mt-16 flex flex-col gap-6 border-t border-white/12 pt-8 text-[0.8125rem] text-white/45 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3">
+            <p>
+              © {new Date().getFullYear()} {site.name}. Todos los derechos
+              reservados.
+            </p>
+            <p>
+              Més Capital intermedia operaciones. El otorgamiento del
+              crédito queda sujeto a la evaluación de cada entidad
+              financiera.
+            </p>
+          </div>
+
+          <a
+            href="https://nuba.studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex shrink-0 items-center gap-2.5 text-white/45 transition-colors hover:text-white"
+          >
+            Desarrollado por
+            {/* Isotipo apilado: "nuba" y "studio" pesan igual (DM Sans
+                bold), leídos como una sola marca en dos renglones. */}
+            <span className="font-dm flex flex-col text-[0.6875rem] leading-[1.15] font-bold tracking-[0.01em] text-white/70 transition-colors group-hover:text-white">
+              <span>nuba</span>
+              <span>studio</span>
+            </span>
+          </a>
         </div>
       </div>
     </footer>

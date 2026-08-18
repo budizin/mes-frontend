@@ -18,7 +18,7 @@ const entidades = [
 
 export function Entidades() {
   return (
-    <section className="border-y border-linea bg-niebla">
+    <section className="relative border-y border-linea bg-niebla">
       <div className="mx-auto max-w-[80rem] px-6 py-14 lg:px-10">
         <Reveal>
           <p className="eyebrow text-center text-ink-faint">

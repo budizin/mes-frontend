@@ -76,7 +76,7 @@ export function SiteHeader() {
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         alTope
           ? "border-b border-transparent"
-          : "border-b border-linea bg-white/85 backdrop-blur-md"
+          : "border-b border-linea bg-white/92 backdrop-blur-md"
       }`}
     >
       <div className="mx-auto flex h-[4.5rem] max-w-[80rem] items-center justify-between px-6 lg:px-10">
@@ -91,37 +91,55 @@ export function SiteHeader() {
 
         <nav
           aria-label="Principal"
-          className="hidden items-center gap-9 lg:flex"
+          className="hidden items-center gap-7 lg:flex"
         >
-          {nav.map((item) => {
-            const esActiva = activa === item.href.slice(1);
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                aria-current={esActiva ? "true" : undefined}
-                className={`group relative text-[0.9375rem] font-medium transition-colors duration-300 ${
-                  esActiva ? "text-ink" : "text-ink-soft hover:text-ink"
-                }`}
-              >
-                {item.label}
-                {/* Subrayado fino: el mismo gesto marca hover y sección activa,
-                    así el menú no inventa un segundo lenguaje para lo mismo. */}
-                <span
-                  aria-hidden="true"
-                  className={`absolute -bottom-1.5 left-0 block h-px w-full origin-left bg-azul transition-transform duration-300 group-hover:scale-x-100 ${
-                    esActiva ? "scale-x-100" : "scale-x-0"
-                  }`}
-                />
-              </a>
-            );
-          })}
-          <a
-            href="#contacto"
-            className="rounded-full bg-ink px-5 py-2.5 text-[0.9375rem] font-semibold text-white transition-colors duration-200 hover:bg-azul"
+          <div className="flex items-center gap-9">
+            {nav.map((item) => {
+              const esActiva = activa === item.href.slice(1);
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={esActiva ? "true" : undefined}
+                  className="group relative text-sm font-normal text-ink transition-colors duration-300"
+                >
+                  {item.label}
+                  {/* Subrayado fino: el mismo gesto marca hover y sección activa,
+                      así el menú no inventa un segundo lenguaje para lo mismo. */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute bottom-0 left-0 block h-px w-full origin-left bg-azul transition-transform duration-300 group-hover:scale-x-100 ${
+                      esActiva ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
+                </a>
+              );
+            })}
+          </div>
+
+          {/* El CTA sólo existe fuera del hero: mientras se lee "arriba de todo"
+              queda desmontado en aria (y sin ancho), y al haber scroll entra
+              deslizando de derecha a izquierda, empujando los links con él. */}
+          <div
+            aria-hidden={alTope}
+            className={`flex items-center gap-7 overflow-hidden transition-[max-width] duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              alTope ? "max-w-0" : "max-w-[16rem]"
+            }`}
           >
-            Solicitar financiamiento
-          </a>
+            {/* Mismo divisor vertical que usan proceso y nosotros para partir un
+                layout en dos: acá separa el cuerpo (navegación) de la firma (CTA). */}
+            <span aria-hidden="true" className="spine h-7 w-px shrink-0" />
+
+            <a
+              href="#contacto"
+              tabIndex={alTope ? -1 : undefined}
+              className={`shrink-0 whitespace-nowrap rounded-full bg-azul px-5 py-2.5 text-sm font-semibold text-white transition-[transform,opacity] duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03] hover:bg-azul-deep active:scale-[0.98] ${
+                alTope ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
+              }`}
+            >
+              Solicitar financiamiento
+            </a>
+          </div>
         </nav>
 
         <button
@@ -158,11 +176,11 @@ export function SiteHeader() {
       {open && (
         <div
           id="menu-movil"
-          className="menu-abre border-t border-linea bg-white lg:hidden"
+          className="menu-abre h-[calc(100svh-4.5rem)] overflow-y-auto border-t border-linea bg-white lg:hidden"
         >
           <nav
             aria-label="Principal móvil"
-            className="mx-auto flex max-h-[calc(100svh-4.5rem)] max-w-[80rem] flex-col overflow-y-auto px-6 py-4"
+            className="mx-auto flex h-full max-w-[80rem] flex-col justify-center px-6 py-4"
           >
             {nav.map((item) => {
               const esActiva = activa === item.href.slice(1);
@@ -191,7 +209,7 @@ export function SiteHeader() {
             <a
               href="#contacto"
               onClick={() => setOpen(false)}
-              className="mt-5 rounded-full bg-ink px-5 py-3.5 text-center font-semibold text-white"
+              className="mt-5 rounded-full bg-ink px-5 py-3.5 text-center font-semibold text-white transition-transform duration-200 active:scale-[0.98]"
             >
               Solicitar financiamiento
             </a>

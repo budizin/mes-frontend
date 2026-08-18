@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
@@ -28,6 +31,40 @@ const preguntas = [
   },
 ];
 
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border-b border-linea first:border-t">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="flex w-full cursor-pointer items-start justify-between gap-6 py-6 text-left text-lg font-semibold tracking-[-0.02em]"
+      >
+        {q}
+        <span
+          aria-hidden="true"
+          className={`relative mt-2 block h-3.5 w-3.5 shrink-0 transition-transform duration-300 ease-in-out ${
+            open ? "rotate-45" : ""
+          }`}
+        >
+          <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 bg-azul" />
+          <span className="absolute left-1/2 top-0 h-full w-[1.5px] -translate-x-1/2 bg-azul" />
+        </span>
+      </button>
+      <div
+        className="grid transition-[grid-template-rows] duration-300 ease-in-out"
+        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+      >
+        <div className="overflow-hidden">
+          <p className="max-w-[62ch] pb-7 text-ink-soft">{a}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Faq() {
   return (
     <section className="border-y border-linea bg-niebla">
@@ -40,19 +77,7 @@ export function Faq() {
           <div className="lg:col-span-8">
             {preguntas.map((p, i) => (
               <Reveal key={p.q} delay={i * 60}>
-                <details className="group border-b border-linea first:border-t">
-                  <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-6 text-lg font-semibold tracking-[-0.02em]">
-                    {p.q}
-                    <span
-                      aria-hidden="true"
-                      className="relative mt-2 block h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-open:rotate-45"
-                    >
-                      <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 bg-azul" />
-                      <span className="absolute left-1/2 top-0 h-full w-[1.5px] -translate-x-1/2 bg-azul" />
-                    </span>
-                  </summary>
-                  <p className="max-w-[62ch] pb-7 text-ink-soft">{p.a}</p>
-                </details>
+                <FaqItem q={p.q} a={p.a} />
               </Reveal>
             ))}
           </div>

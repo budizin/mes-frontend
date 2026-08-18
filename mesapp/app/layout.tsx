@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Syne } from "next/font/google";
+import { DM_Sans, Inter, Syne } from "next/font/google";
 import "./globals.css";
 import { site } from "./site-config";
 
@@ -18,6 +18,14 @@ const inter = Inter({
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
+  display: "swap",
+});
+
+/** Solo para el crédito "nuba studio" del footer: bold nada más. */
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: ["700"],
   display: "swap",
 });
 
@@ -56,7 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-AR"
-      className={`${inter.variable} ${syne.variable} h-full antialiased`}
+      className={`${inter.variable} ${syne.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>

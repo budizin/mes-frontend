@@ -1,3 +1,4 @@
+import { Mark } from "./brand";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
@@ -62,7 +63,11 @@ export function Productos() {
                 i > 0 ? "border-t border-linea pt-12 lg:border-t-0 lg:border-l lg:pt-0" : ""
               }`}
             >
-              <span className={`block h-9 w-9 rounded-full ${p.disco}`} />
+              <span
+                className={`flex h-11 w-11 items-center justify-center rounded-full ${p.disco}`}
+              >
+                <Mark className="h-[1.1rem] w-auto text-white" />
+              </span>
 
               <h3 className="mt-7 text-2xl font-bold tracking-[-0.03em]">
                 {p.nombre}

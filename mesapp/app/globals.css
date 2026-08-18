@@ -15,6 +15,8 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-syne), var(--font-inter), sans-serif;
+  /* Solo para el crédito "nuba studio" del footer. */
+  --font-dm: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 
   /* Escala tipográfica: salto grande entre display y cuerpo, sin pasos intermedios tibios */
   --text-display: clamp(2.25rem, 4.2vw, 3.75rem);
@@ -48,7 +50,6 @@
   :focus-visible {
     outline: 2px solid var(--color-azul);
     outline-offset: 3px;
-    border-radius: 2px;
   }
 
   summary::-webkit-details-marker {
@@ -121,6 +122,23 @@
   animation: hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
+/* Dos palabras del título "se encienden": arrancan en tinta, como el resto
+   de la frase, y al final de la entrada del hero pasan a amarillo, como si
+   se prendiera una luz. Delay individual por palabra (ver hero.tsx) para que
+   no enciendan a la vez. */
+@keyframes enciende {
+  from {
+    color: var(--color-ink);
+  }
+  to {
+    color: var(--color-amarillo);
+  }
+}
+
+@utility enciende {
+  animation: enciende 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 /* Panel del menú móvil: despliegue corto y seco. No reusa `entra` porque
    0.9s en un menú se siente lento — acá el gesto tiene que responder. */
 @keyframes menu-in {
@@ -184,5 +202,9 @@
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .enciende {
+    color: var(--color-amarillo);
   }
 }

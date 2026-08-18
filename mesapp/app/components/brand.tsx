@@ -1,5 +1,6 @@
 type MarkProps = {
   className?: string;
+  style?: React.CSSProperties;
   /**
    * Pinta el isotipo con los tres colores del sistema en lugar de un tono
    * plano. Sólo para el uso a escala de página en el hero: el id del gradiente
@@ -11,13 +12,14 @@ type MarkProps = {
 const ESPECTRO_ID = "mes-mark-espectro";
 
 /** La "M" del isotipo, tal cual el SVG del brand. */
-export function Mark({ className, espectro = false }: MarkProps) {
+export function Mark({ className, style, espectro = false }: MarkProps) {
   return (
     <svg
       viewBox="0 0 154 153"
       fill="none"
       aria-hidden="true"
       className={className}
+      style={style}
     >
       {espectro && (
         <defs>
@@ -55,14 +57,14 @@ export function Wordmark({
         }`}
       />
       <span
-        className={`text-[1.35rem] font-bold tracking-[-0.045em] transition-colors duration-300 ${
-          tone === "white" ? "text-white" : "text-ink"
+        className={`text-[20px] font-medium tracking-[-0.045em] transition-colors duration-300 ${
+          tone === "white" ? "text-white" : "text-azul"
         }`}
       >
         Més{" "}
         <span
           className={`transition-colors duration-300 ${
-            tone === "white" ? "text-white/60" : "text-ink"
+            tone === "white" ? "text-white" : "text-azul"
           }`}
         >
           Capital
