@@ -12,7 +12,7 @@ const puntos = [
     disco: "bg-naranja",
     titulo: "Especialistas, no generalistas",
     texto:
-      "Trabajamos solo con financiamiento productivo. Esa concentración es lo que nos permite estructurar operaciones con precisión técnica.",
+      "Trabajamos solo con financiamiento productivo, lo que nos permite estructurar operaciones con precisión técnica.",
   },
   {
     disco: "bg-amarillo",
@@ -42,18 +42,51 @@ const puntos = [
 
 /* Divisores del grid: línea arriba al saltar de fila, línea a la izquierda
    entre columnas. Los quiebres de columna dependen del breakpoint (1/2/3
-   por fila), así que cada eje se resuelve por separado según el índice. */
+   por fila), así que cada eje se resuelve por separado según el índice.
+   La línea horizontal se dibuja con un pseudo-elemento (no con border-t)
+   para poder extenderla sobre el gap-x-10 y que no quede cortada entre
+   columnas; solo se extiende hacia adentro, nunca más allá del borde
+   exterior del grid. */
+/* Clases antes:left/antes:right completas y literales (no armadas por
+   concatenación): Tailwind extrae clases escaneando el archivo en busca de
+   substrings exactos, así que un `before:${cond ? "-left-5" : "left-0"}`
+   nunca se detecta y la clase se pierde en build. */
+const ANTES_SM_IZQ_EXT = "sm:before:-left-5";
+const ANTES_SM_IZQ_0 = "sm:before:left-0";
+const ANTES_SM_DER_EXT = "sm:before:-right-5";
+const ANTES_SM_DER_0 = "sm:before:right-0";
+const ANTES_LG_IZQ_EXT = "lg:before:-left-5";
+const ANTES_LG_IZQ_0 = "lg:before:left-0";
+const ANTES_LG_DER_EXT = "lg:before:-right-5";
+const ANTES_LG_DER_0 = "lg:before:right-0";
+
 function bordes(i: number) {
   const filaSm = i >= 2;
   const filaLg = i >= 3;
   const colSm = i % 2 !== 0;
   const colLg = i % 3 !== 0;
+  const derSm = i % 2 === 0;
+  const derLg = i % 3 !== 2;
 
   return [
-    i > 0 && "border-t border-linea pt-10",
-    filaSm ? "sm:border-t sm:pt-10" : "sm:border-t-0 sm:pt-0",
+    "relative pb-10",
+    i > 0 &&
+      "pt-10 before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-linea before:content-['']",
+    filaSm
+      ? [
+          "sm:pt-10 sm:before:block",
+          colSm ? ANTES_SM_IZQ_EXT : ANTES_SM_IZQ_0,
+          derSm ? ANTES_SM_DER_EXT : ANTES_SM_DER_0,
+        ].join(" ")
+      : "sm:pt-0 sm:before:hidden",
     colSm ? "sm:border-l sm:border-linea sm:pl-8" : "sm:border-l-0 sm:pl-0",
-    filaLg ? "lg:border-t lg:pt-12" : "lg:border-t-0 lg:pt-0",
+    filaLg
+      ? [
+          "lg:pt-12 lg:before:block",
+          colLg ? ANTES_LG_IZQ_EXT : ANTES_LG_IZQ_0,
+          derLg ? ANTES_LG_DER_EXT : ANTES_LG_DER_0,
+        ].join(" ")
+      : "lg:pt-0 lg:before:hidden",
     colLg ? "lg:border-l lg:border-linea lg:pl-9" : "lg:border-l-0 lg:pl-0",
   ]
     .filter(Boolean)

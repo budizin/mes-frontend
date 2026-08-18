@@ -81,7 +81,7 @@ export function Contacto() {
 
           <div className="lg:col-span-7">
             <Reveal delay={120}>
-              <div className="border-t border-linea pt-8">
+              <div className="pt-8">
                 {estado === "enviado" ? (
                   <div className="flex min-h-[24rem] flex-col items-start justify-center">
                     <span className="disc flex h-12 w-12 items-center justify-center rounded-full bg-azul">
